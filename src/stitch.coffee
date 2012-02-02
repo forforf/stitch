@@ -1,6 +1,7 @@
 _     = require 'underscore'
 async = require 'async'
 fs    = require 'fs'
+request = require 'request'
 
 {extname, join, normalize} = require 'path'
 
@@ -49,7 +50,11 @@ exports.Package = class Package
       else callback null, parts.join("\n")
 
   compileDependencies: (callback) =>
-    async.map @dependencies, fs.readFile, (err, dependencySources) =>
+    #async.map @dependencies, fs.readFile, (err, dependencySources) =>
+    async.map @dependencies, _.bind(@gatherDependencies, @), (err, dependencySources) =>
+      console.log "error: ", err
+      console.log "Dependency Sources"
+      console.log dependencySources
       if err then callback err
       else callback null, dependencySources.join("\n")
 
@@ -134,6 +139,21 @@ exports.Package = class Package
           res.writeHead 200, 'Content-Type': 'text/javascript'
           res.end source
 
+  gatherDependencies: (path, callback) ->
+    httpPrefix = /^http/
+    console.log "Gathering Dependencies"
+    if path.match httpPrefix
+      request path, (err, resp, body) ->
+        console.log "Link Dependency"
+        if  not err and resp.statusCode = 200
+          console.log "SUCCESS!"
+          callback null, body
+        else
+          console.log "FAILED"
+          callback {err: err, resp: resp}
+    else
+      console.log "File Dependency"
+      callback null, fs.readFile(path)
 
   gatherSourcesFromPath: (sources, sourcePath, callback) ->
     fs.stat sourcePath, (err, stat) =>
