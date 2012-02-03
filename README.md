@@ -1,4 +1,4 @@
-Note on forforf-fork:  This fork updates stitch so that it can also bundle
+*We interupt this README to update you on changes this fork has from the original project*:  This fork updates stitch so that it can also bundle
 in libraries exposed via content distribution networks (or really just any http request). To add in an cdn library as a module, update the config file passed into stich as such:
 
     config.urlpaths = ['http://path/to/lib/lib.js', ... ]
@@ -12,6 +12,10 @@ dependency list
 Modules are cached locally to stitch, dependencies are not.
 
 This is still highly experimental.
+
+Now back to your originally scheduled README ....
+
+
 
 <img src="https://github.com/downloads/sstephenson/stitch/logo.jpg"
 width=432 height=329>
