@@ -9,9 +9,25 @@ dependency list
     config.dependencies ['path/to/local/dep/lib.js', 'http://path/to/cdn/dep/lib.js']
 
 
+Stitch on the server side should be invoked asynchronously. Like so
+
+    app = express.createServer()
+    package = stitch.createPackage config, (err, package) ->
+      src = package.compile (err, source) ->
+        app.get '/app.js', package.createServer()
+
+
 Modules are cached locally to stitch, dependencies are not.
 
+Usage in browser javascript
+
+    myLib = require('cache-dir/host.com/path/to/lib/myLib')
+
 This is still highly experimental.
+Known Issues
+- Local cache of remote libraries can only be removed manually (just delete the directory)
+- Usage 
+
 
 Now back to your originally scheduled README ....
 
