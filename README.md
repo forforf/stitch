@@ -1,3 +1,7 @@
+## Update
+
+grunt seems the defacto standard and [brunch](http://brunch.io) seems a bit more powerful. However, stitch is still a reasonable solution.
+
 *We interupt this README to update you on changes this fork has from the original project*:  This fork updates stitch so that it can also bundle
 in libraries exposed via content distribution networks (or really just any http request). To add in an cdn library as a module, update the config file passed into stich as such:
 
